@@ -28,7 +28,13 @@ function useTasks() {
         localStorage.setItem('tasks', JSON.stringify(newTasks));
     };
 
-    return { tasks, addTask, deleteTarea, editTarea };
+    const toggleTaskStatus = (index) => {
+        const newTasks = tasks.map((task, i) => i === index ? { ...task, status: !task.status } : task);
+        setTasks(newTasks);
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+    };
+
+    return { tasks, addTask, deleteTarea, editTarea, toggleTaskStatus };
 }
 
 export default useTasks;

@@ -11,8 +11,9 @@ import './App.css';
 
 function App() {
   
-    const { tasks, addTask, deleteTarea, editTarea } = useTasks();
+    const { tasks, addTask, deleteTarea, editTarea, toggleTaskStatus } = useTasks();
     const [newTask, setNewTask] = useState({ title: '', description: '' });
+    const [editTask, setEditTask] = useState({ title: '', description: '' });
     const [editTaskIndex, setEditTaskIndex] = useState(null);
     const { colorMode, toggleColorMode } = useColorMode();
 
@@ -40,7 +41,7 @@ function App() {
                     <Route path="/tareas" element={
                         <div>
                             <Header />
-                            <TaskList tasks={tasks} deleteTarea={deleteTarea} editTask={editTarea} setEditTaskIndex={setEditTaskIndex} setNewTask={setNewTask} />
+                            <TaskList tasks={tasks} deleteTarea={deleteTarea} editTask={editTarea} setEditTaskIndex={setEditTaskIndex} setNewTask={setNewTask} toggleTaskStatus={toggleTaskStatus} />
                         {/* Formulario para agregar tareas */}
                         <Center>
                             <form onSubmit={handleAddTask}>
@@ -53,9 +54,9 @@ function App() {
                         {/* Formulario para editar tareas */}
                         {editTaskIndex !== null && (
                             <Center>
-                                <form onSubmit={(e) => { e.preventDefault(); editTarea(editTaskIndex, newTask.title, newTask.description); setEditTaskIndex(null); }}>
-                                    <input type="text" value={newTask.title} onChange={(e) => setNewTask({ ...newTask, title: e.target.value })} placeholder="Nuevo título de la tarea" required />
-                                    <input type="text" value={newTask.description} onChange={(e) => setNewTask({ ...newTask, description: e.target.value })} placeholder="Nueva descripción de la tarea" />
+                                <form onSubmit={(e) => { e.preventDefault(); editTarea(editTaskIndex, editTask.title, editTask.description); setEditTaskIndex(null); }}>
+                                    <input type="text" value={editTask.title} onChange={(e) => setEditTask({ ...editTask, title: e.target.value })} placeholder="Nuevo título de la tarea" required />
+                                    <input type="text" value={editTask.description} onChange={(e) => setEditTask({ ...editTask, description: e.target.value })} placeholder="Nueva descripción de la tarea" />
                                     <Button type="submit">Editar tarea</Button>
                                 </form>
                             </Center>
